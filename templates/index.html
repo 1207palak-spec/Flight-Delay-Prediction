@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✈️ Flight Delay Prediction</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .result-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .result-section.show {
+            display: block;
+        }
+
+        .result-title {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .risk-score {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 15px 0;
+            color: #667eea;
+        }
+
+        .risk-level {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .risk-level.low {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .risk-level.medium {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .risk-level.high {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .top-features {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #ddd;
+        }
+
+        .feature-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            color: #555;
+        }
+
+        .feature-bar {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 6px;
+            border-radius: 3px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✈️ Flight Delay Predictor</h1>
+            <p>Predict flight delays with AI-powered insights</p>
+        </div>
+
+        <form method="POST">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="airline">Airline</label>
+                    <select name="airline" required>
+                        <option value="">Select Airline</option>
+                        <option value="AirIndia">Air India</option>
+                        <option value="IndiGo">IndiGo</option>
+                        <option value="Vistara">Vistara</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="origin">Origin</label>
+                    <select name="origin" required>
+                        <option value="">Select Airport</option>
+                        <option value="BLR">Bangalore (BLR)</option>
+                        <option value="BOM">Mumbai (BOM)</option>
+                        <option value="DEL">Delhi (DEL)</option>
+                        <option value="HYD">Hyderabad (HYD)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="destination">Destination</label>
+                    <select name="destination" required>
+                        <option value="">Select Airport</option>
+                        <option value="BLR">Bangalore (BLR)</option>
+                        <option value="BOM">Mumbai (BOM)</option>
+                        <option value="DEL">Delhi (DEL)</option>
+                        <option value="HYD">Hyderabad (HYD)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="weekday">Weekday</label>
+                    <select name="weekday" required>
+                        <option value="">Select Weekday</option>
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="day">Day of Month</label>
+                    <input type="number" name="day" min="1" max="31" required>
+                </div>
+                <div class="form-group">
+                    <label for="month">Month</label>
+                    <input type="number" name="month" min="1" max="12" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="dephour">Departure Hour (0-23)</label>
+                <input type="number" name="dephour" min="0" max="23" required>
+            </div>
+
+            <button type="submit" class="submit-btn">🔍 Predict Delay Risk</button>
+        </form>
+
+        {% if risk_score is not none %}
+        <div class="result-section show">
+            <div class="result-title">📊 Prediction Results</div>
+            
+            <div class="risk-score">
+                ⏱️ {{ risk_score }}%
+            </div>
+
+            <div class="risk-level {% if risk_score < 30 %}low{% elif risk_score < 60 %}medium{% else %}high{% endif %}">
+                {{ risk_level }}
+            </div>
+
+            {% if top_features %}
+            <div class="top-features">
+                <strong>🔍 Top Contributing Factors:</strong>
+                {% for feature, importance in top_features %}
+                <div class="feature-item">
+                    <span>{{ feature }}</span>
+                    <span>{{ "%.2f%%"|format(importance * 100) }}</span>
+                </div>
+                <div class="feature-bar" style="width: {{ importance * 100 }}%"></div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
