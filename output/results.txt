@@ -1,0 +1,88 @@
+SkyPredict: Explainable Flight Delay Monitoring Platform
+-------------------------------------------------------
+
+Test Environment:
+- Platform: Localhost (Flask)
+- URL: http://127.0.0.1:5000
+- ML Model: Random Forest Classifier
+- Dataset: flight_data.csv
+- Prediction Type: Probability-based risk scoring
+
+-------------------------------------------------------
+Sample Test Case 1
+-------------------------------------------------------
+Input Parameters:
+Airline       : IndiGo
+Origin Airport: DEL
+Destination   : BOM
+Day           : 15
+Month         : 6
+Weekday       : Tuesday
+Departure Hour: 18
+
+Prediction Output:
+Delay Risk Score : 78.42 %
+Risk Category    : High Risk
+
+Explainable AI (Top Factors):
+1. DepHour       – Peak hour congestion impact
+2. Airline       – Operational delay patterns
+3. Destination  – Airport traffic density
+
+-------------------------------------------------------
+Sample Test Case 2
+-------------------------------------------------------
+Input Parameters:
+Airline       : Air India
+Origin Airport: BLR
+Destination   : DEL
+Day           : 5
+Month         : 3
+Weekday       : Monday
+Departure Hour: 9
+
+Prediction Output:
+Delay Risk Score : 32.15 %
+Risk Category    : Medium Risk
+
+Explainable AI (Top Factors):
+1. Airline       – Historical delay trends
+2. Origin        – Airport congestion level
+3. DepHour       – Morning traffic surge
+
+-------------------------------------------------------
+Sample Test Case 3
+-------------------------------------------------------
+Input Parameters:
+Airline       : Vistara
+Origin Airport: DEL
+Destination   : HYD
+Day           : 20
+Month         : 11
+Weekday       : Saturday
+Departure Hour: 6
+
+Prediction Output:
+Delay Risk Score : 12.68 %
+Risk Category    : Low Risk
+
+Explainable AI (Top Factors):
+1. DepHour       – Off-peak scheduling
+2. Destination  – Lower airport congestion
+3. Weekday       – Weekend traffic pattern
+
+-------------------------------------------------------
+Overall Observations
+-------------------------------------------------------
+- The system successfully predicts delay risk as a percentage.
+- Risk categorization improves decision-making clarity.
+- Explainable AI increases trust by identifying top contributing factors.
+- Peak-hour departures show higher delay probability.
+- Airline and destination significantly influence delay risk.
+
+-------------------------------------------------------
+Conclusion
+-------------------------------------------------------
+The SkyPredict system demonstrates effective integration of machine learning,
+probability-based risk assessment, and explainable AI to support informed
+decision-making in flight operations and passenger planning.

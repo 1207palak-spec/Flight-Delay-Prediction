@@ -267,7 +267,7 @@
                     <span>{{ feature }}</span>
                     <span>{{ "%.2f%%"|format(importance * 100) }}</span>
                 </div>
-                <div class="feature-bar" style="width: {{ importance * 100 }}%"></div>
+                <div class="feature-bar" style="width: { importance * 100 }%"></div>
                 {% endfor %}
             </div>
             {% endif %}
